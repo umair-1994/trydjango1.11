@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Restaurant object details</h1>
+
+<li><h3>{{ object.name }}</h3></li>
+<li>{{ object.category }} </li>
+<li> {{ object.timestamp }}</li>
+<li> updated {{ object.Updated_date|timesince }} ago</li>
+
+{% endblock %}

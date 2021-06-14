@@ -1,9 +1,81 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
-from django.views.generic import View
+from django.views.generic import View, ListView, DetailView, CreateView
 from .models import RestaurantLocation
+from .form import RestaurantForm, RestaurantLocationForm
+
 # Create your views here.
+
+
+class RestaurantCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'restaurants/form.html'
+    success_url = '/list/'
+    form_class = RestaurantLocationForm
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.owner = self.request.user
+
+        return super(RestaurantCreateView, self).form_valid(form)
+
+
+@login_required
+def restaurant_createview(request):
+    form = RestaurantForm(request.POST or None)
+    errors = None
+    template_name = 'restaurants/form.html'
+    if form.is_valid():
+        if request.user.is_authenticated():
+            RestaurantLocation.objects.create(
+                name=form.cleaned_data.get('name'),
+                location=form.cleaned_data.get('location'),
+                category=form.cleaned_data.get('category'),
+            )
+            return HttpResponseRedirect('/list/')
+        else:
+            return HttpResponseRedirect('/login')
+    if form.errors:
+        errors = form.errors
+    context = {'form': form, 'errors': errors}
+    return render(request, template_name, context)
+
+
+class RestaurantsList(ListView):
+    template_name = 'restaurants/Rlist.html'
+
+    def get_queryset(self):
+        slug = self.kwargs.get('slug')
+        if slug:
+            queryset = RestaurantLocation.objects.filter(
+                Q(category__icontains=slug) | Q(category__iexact=slug))
+        else:
+            queryset = RestaurantLocation.objects.all()
+        return queryset
+
+
+class RestaurantsDetailView(DetailView):
+    queryset = RestaurantLocation.objects.all()
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super(RestaurantsDetailView, self).get_context_data(*args, **kwargs)
+    #     return context
+
+    # def get_object(self, *args, **kwargs):
+    #     return get_object_or_404(RestaurantLocation, id=self.kwargs.get('rest_id'))
+
+
+class RestaurantListView(View):
+    def get(self, request):
+        queryset = RestaurantLocation.objects.all()
+        template_name = 'restaurants/Rlist.html'
+        context = {
+            "object_list": queryset
+        }
+        return render(request, template_name, context)
 
 
 # def home(request):
@@ -31,14 +103,8 @@ from .models import RestaurantLocation
 #     return render(request, template_name, context)
 #
 
-class RestaurantListView(View):
-    def get(self, request):
-        queryset = RestaurantLocation.objects.all()
-        template_name = 'restaurants/restaurants_list.html'
-        context = {
-            "rlist": queryset
-        }
-        return render(request, template_name, context)
+#
+
 
 
 
