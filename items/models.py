@@ -1,13 +1,14 @@
 import now as now
 from django.db import models
 from django.conf import settings
-from src.restaurants.models import RestaurantLocation
+from restaurants.models import RestaurantLocation
+from django.utils.timezone import now
 # Create your models here.
 
 USERS = settings.AUTH_USER_MODEL
 
 
-class Items(models.Model):
+class Item(models.Model):
 
     user = models.ForeignKey(USERS)
     restaurant = models.ForeignKey(RestaurantLocation)
@@ -16,7 +17,7 @@ class Items(models.Model):
     contents = models.TextField(help_text='Enter comma separated names')
     excludes = models.TextField(help_text='Enter comma separated names', null=True, blank=True)
     timestamp = models.DateTimeField(default=now, editable=False)
-    Updated_date = models.DateTimeField(auto_now=True)
+    updated_date = models.DateTimeField(auto_now=True)
     public = models.BooleanField(default=True)
 
     class Meta:
