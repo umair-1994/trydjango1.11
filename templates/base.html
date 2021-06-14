@@ -2,9 +2,15 @@
 <html>
 <head>
 <title>home page</title>
+
 </head>
 <body>
+
+
+
 <h1>Muypicky.com</h1>
+
+{% block head_title %} {% endblock %}
 
 <a href="{% url 'about' %}">About us</a>
 <a href="{% url 'contact' %}">Contact us</a>

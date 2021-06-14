@@ -20,6 +20,9 @@ class Item(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     public = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         ordering = ['-updated_date', '-timestamp']
 

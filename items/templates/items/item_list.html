@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1>Items list</h1>
+<ul>
+{% for obj in object_list %}
+    <p style="display:inline;">location:  <h3 style="display:inline;">{{ obj.restaurant}}</h3> </p>
+    <h2><li><a href="/items/item_detail"> {{ obj.name }}</a></li></h2>
+  {% if obj.contents %}
+  <h3>contents</h3>
+    <li>
+      {% for item in obj.get_contents %}
+        {{ item }}
+      {% endfor %}
+    </li>
+  {% endif %}
+
+
+  {% if obj.excludes %}
+  <h3>excludes</h3>
+    <li>
+      {% for item in obj.get_excludes %}
+        {{ item }}
+    {% endfor %}
+    </li>
+  {% endif %}
+
+{% endfor %}
+</ul>
+<h2>end of the list</h2>
+{% endblock %}

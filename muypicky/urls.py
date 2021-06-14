@@ -43,4 +43,5 @@ urlpatterns = [
     # url(r'^list/(?P<slug>[\w-]+)/$', RestaurantsDetailView.as_view(), name='restaurant-detail'),
 
     url(r'^restaurants/', include('restaurants.urls', namespace='restaurants')),
+    url(r'^items/', include('items.urls', namespace='items')),
 ]
