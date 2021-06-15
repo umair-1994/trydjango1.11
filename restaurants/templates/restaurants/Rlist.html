@@ -2,10 +2,11 @@
 
 
 {% block content %}
-    <h1>Restaurants list</h1>
+    <h1 style="display: inline;">Restaurants list</h1>
+    <h3 style="display: inline;"><a href="/items/create/">Add</a></h3>
 <ul>
 {% for restaurant in object_list %}
-    <li><a href="/list/{{ restaurant.slug }}/"> {{ restaurant.name }}</a></li>
+    <li><a href="/restaurants/{{ restaurant.slug }}/"> {{ restaurant.name }}</a></li>
     <br>
 <li>{{ restaurant.title }}  {{ restaurant.category }}  {{ restaurant.timestamp }}</li>
 {% endfor %}

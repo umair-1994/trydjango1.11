@@ -11,6 +11,7 @@ USER = settings.AUTH_USER_MODEL
 
 
 class RestaurantLocation(models.Model):
+    models.Ne
     owner = models.ForeignKey(USER, default=1)
     name = models.CharField(max_length=120)
     location = models.CharField(max_length=180, null=True, blank=True)

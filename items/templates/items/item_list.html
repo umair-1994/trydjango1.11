@@ -5,8 +5,9 @@
     <h1>Items list</h1>
 <ul>
 {% for obj in object_list %}
-    <p style="display:inline;">location:  <h3 style="display:inline;">{{ obj.restaurant}}</h3> </p>
+
     <h2><li><a href="/items/item_detail"> {{ obj.name }}</a></li></h2>
+      <p style="display:inline;">location:  <h3 style="display:inline;">{{ obj.restaurant}}</h3> </p>
   {% if obj.contents %}
   <h3>contents</h3>
     <li>

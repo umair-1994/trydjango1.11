@@ -22,7 +22,8 @@ from .views import RestaurantListView, \
     RestaurantsList,\
     RestaurantsDetailView,\
     restaurant_createview,\
-    RestaurantCreateView
+    RestaurantCreateView,\
+    RestaurantUpdateView
 
 urlpatterns = [
     # url('rlist', rest),
@@ -31,4 +32,5 @@ urlpatterns = [
     url(r'^create/$', RestaurantCreateView.as_view(), name='create'),
     # url(r'^list/(?P<slug>[\w-]+)/$', RestaurantsList.as_view()),
     url(r'^(?P<slug>[\w-]+)/$', RestaurantsDetailView.as_view(), name='detail'),
+    url(r'^(?P<slug>[\w-]+)/edit/$', RestaurantUpdateView.as_view(), name='edit'),
 ]

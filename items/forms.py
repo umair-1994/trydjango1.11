@@ -7,9 +7,9 @@ class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = [
-            'name',
-            'excludes',
-            'contents',
             'restaurant',
+            'name',
+            'contents',
+            'excludes',
             'public'
         ]
